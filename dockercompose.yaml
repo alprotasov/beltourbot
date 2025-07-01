@@ -1,0 +1,175 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14-alpine
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/postgres_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgres_password
+      POSTGRES_DB_FILE: /run/secrets/postgres_db
+    secrets:
+      - postgres_user
+      - postgres_password
+      - postgres_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $(cat /run/secrets/postgres_user)"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - backend
+
+  redis:
+    image: redis:7-alpine
+    command: ["sh","-c","redis-server --requirepass $(cat /run/secrets/redis_password)"]
+    secrets:
+      - redis_password
+    volumes:
+      - redisdata:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli -a $(cat /run/secrets/redis_password) ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - backend
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    entrypoint: ["sh","-c"]
+    command: >
+      export DATABASE_URL=$(cat /run/secrets/database_url) &&
+      export REDIS_URL=$(cat /run/secrets/redis_url) &&
+      uvicorn app.main:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - backend
+    secrets:
+      - database_url
+      - redis_url
+
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    entrypoint: ["sh","-c"]
+    command: >
+      export TELEGRAM_TOKEN=$(cat /run/secrets/telegram_token) &&
+      export DATABASE_URL=$(cat /run/secrets/database_url) &&
+      export REDIS_URL=$(cat /run/secrets/redis_url) &&
+      python bot/main.py
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - backend
+    secrets:
+      - telegram_token
+      - database_url
+      - redis_url
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    entrypoint: ["sh","-c"]
+    command: >
+      export CELERY_BROKER_URL=$(cat /run/secrets/celery_broker_url) &&
+      export DATABASE_URL=$(cat /run/secrets/database_url) &&
+      export REDIS_URL=$(cat /run/secrets/redis_url) &&
+      celery -A app.worker worker --loglevel=info
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - backend
+    secrets:
+      - celery_broker_url
+      - database_url
+      - redis_url
+
+  beat:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    entrypoint: ["sh","-c"]
+    command: >
+      export CELERY_BROKER_URL=$(cat /run/secrets/celery_broker_url) &&
+      export DATABASE_URL=$(cat /run/secrets/database_url) &&
+      export REDIS_URL=$(cat /run/secrets/redis_url) &&
+      celery -A app.worker beat --loglevel=info --scheduler celery.beat.PersistentScheduler --schedule=/tmp/celerybeat-schedule
+    volumes:
+      - beatdata:/tmp
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - backend
+    secrets:
+      - celery_broker_url
+      - database_url
+      - redis_url
+
+  flower:
+    image: mher/flower:1.0.0
+    entrypoint: ["sh","-c"]
+    command: >
+      flower --broker=$(cat /run/secrets/celery_broker_url) --address=0.0.0.0 --port=5555
+    ports:
+      - "5555:5555"
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - backend
+    secrets:
+      - celery_broker_url
+
+volumes:
+  pgdata:
+  redisdata:
+  beatdata:
+
+secrets:
+  postgres_user:
+    external: true
+  postgres_password:
+    external: true
+  postgres_db:
+    external: true
+  redis_password:
+    external: true
+  database_url:
+    external: true
+  redis_url:
+    external: true
+  celery_broker_url:
+    external: true
+  telegram_token:
+    external: true
+
+networks:
+  backend:
+    internal: true
