@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<adsConfig version="1.0" xmlns="https://belarustourism.bot/adsconfig" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://belarustourism.bot/adsconfig ads_config.xsd">
+  <settings>
+    <requestTimeout>5000</requestTimeout>
+    <maxRetries>3</maxRetries>
+    <backoffMultiplier>2.0</backoffMultiplier>
+    <defaultLanguage>en</defaultLanguage>
+    <defaultRegion>BY</defaultRegion>
+  </settings>
+  <providers>
+    <provider id="google_admob" type="admob" enabled="true" priority="1">
+      <credentials>
+        <apiKey>${GOOGLE_ADMOB_API_KEY}</apiKey>
+      </credentials>
+      <adUnits>
+        <unit format="banner" id="${GOOGLE_ADMOB_BANNER_UNIT_ID}"/>
+        <unit format="interstitial" id="${GOOGLE_ADMOB_INTERSTITIAL_UNIT_ID}"/>
+        <unit format="rewarded" id="${GOOGLE_ADMOB_REWARDED_UNIT_ID}"/>
+      </adUnits>
+      <localization>
+        <locale code="en">
+          <unit format="banner" id="${GOOGLE_ADMOB_BANNER_EN}"/>
+          <unit format="interstitial" id="${GOOGLE_ADMOB_INTERSTITIAL_EN}"/>
+          <unit format="rewarded" id="${GOOGLE_ADMOB_REWARDED_EN}"/>
+        </locale>
+        <locale code="ru">
+          <unit format="banner" id="${GOOGLE_ADMOB_BANNER_RU}"/>
+          <unit format="interstitial" id="${GOOGLE_ADMOB_INTERSTITIAL_RU}"/>
+          <unit format="rewarded" id="${GOOGLE_ADMOB_REWARDED_RU}"/>
+        </locale>
+        <locale code="be">
+          <unit format="banner" id="${GOOGLE_ADMOB_BANNER_BE}"/>
+          <unit format="interstitial" id="${GOOGLE_ADMOB_INTERSTITIAL_BE}"/>
+          <unit format="rewarded" id="${GOOGLE_ADMOB_REWARDED_BE}"/>
+        </locale>
+      </localization>
+      <geotargeting defaultRegion="BY">
+        <region code="BY">
+          <unit format="banner" id="${GOOGLE_ADMOB_BANNER_BY}"/>
+          <unit format="interstitial" id="${GOOGLE_ADMOB_INTERSTITIAL_BY}"/>
+          <unit format="rewarded" id="${GOOGLE_ADMOB_REWARDED_BY}"/>
+        </region>
+        <region code="RU">
+          <unit format="banner" id="${GOOGLE_ADMOB_BANNER_RU}"/>
+          <unit format="interstitial" id="${GOOGLE_ADMOB_INTERSTITIAL_RU}"/>
+          <unit format="rewarded" id="${GOOGLE_ADMOB_REWARDED_RU}"/>
+        </region>
+      </geotargeting>
+    </provider>
+    <provider id="yandex_direct" type="yandex" enabled="true" priority="2">
+      <credentials>
+        <apiKey>${YANDEX_DIRECT_API_KEY}</apiKey>
+      </credentials>
+      <adFormats>
+        <format>banner</format>
+        <format>text</format>
+      </adFormats>
+      <campaigns>
+        <campaign id="summerTours">
+          <description>Promote summer tours in Belarus</description>
+          <landingUrlTemplate>https://yandexad.example.com/click?campaign=summerTours&amp;uid={userId}</landingUrlTemplate>
+        </campaign>
+      </campaigns>
+    </provider>
+    <provider id="affiliate_partner" type="affiliate" enabled="true" priority="3">
+      <endpoint>https://affiliate.partner.com/api/v1/ads</endpoint>
+      <credentials>
+        <apiKey>${AFFILIATE_API_KEY}</apiKey>
+      </credentials>
+      <campaigns>
+        <campaign id="guidebooks">
+          <description>Sell travel guidebooks</description>
+          <urlTemplate>https://affiliate.partner.com/?campaign=guidebooks&amp;ref={userId}</urlTemplate>
+        </campaign>
+        <campaign id="travel_insurance">
+          <description>Promote travel insurance</description>
+          <urlTemplate>https://affiliate.partner.com/?campaign=insurance&amp;ref={userId}</urlTemplate>
+        </campaign>
+      </campaigns>
+    </provider>
+  </providers>
+  <fallbackProviders>
+    <providerRef id="google_admob"/>
+    <providerRef id="yandex_direct"/>
+    <providerRef id="affiliate_partner"/>
+  </fallbackProviders>
+  <placements>
+    <placement id="welcome_message" format="text" providerRef="affiliate_partner">
+      <trigger>onStart</trigger>
+      <templates>
+        <text>Check out our travel guidebooks: {adUrl}</text>
+      </templates>
+    </placement>
+    <placement id="route_suggestion_banner" format="banner" providerRef="google_admob">
+      <trigger>onRouteSuggestion</trigger>
+    </placement>
+    <placement id="quiz_interstitial" format="interstitial" providerRef="google_admob">
+      <trigger>onQuizEnd</trigger>
+    </placement>
+    <placement id="scratchmap_rewarded" format="rewarded" providerRef="google_admob">
+      <trigger>onScratchMapUnlock</trigger>
+      <reward>extraMapPoints</reward>
+    </placement>
+    <placement id="badge_notification" format="text" providerRef="affiliate_partner">
+      <trigger>onBadgeEarned</trigger>
+      <templates>
+        <text>Congrats! Earned badge. Special offer: {adUrl}</text>
+      </templates>
+    </placement>
+  </placements>
+</adsConfig>
