@@ -1,0 +1,206 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Belarus Tourism Telegram Bot 1.0\n"
+"Report-Msgid-Bugs-To: i18n@belarustourismbot.com\n"
+"POT-Creation-Date: 2025-06-30 00:00+0000\n"
+"PO-Revision-Date: 2025-06-30 12:00+0000\n"
+"Last-Translator: I18N Team <i18n@belarustourismbot.com>\n"
+"Language-Team: Belarus Tourism Bot Localization <i18n@belarustourismbot.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Welcome to Belarus Tourism Bot!"
+msgstr ""
+
+msgid "Select your language:"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "???????"
+msgstr ""
+
+msgid "??????????"
+msgstr ""
+
+#. Title of the main menu
+msgid "Main Menu"
+msgstr ""
+
+msgid "Explore Routes"
+msgstr ""
+
+msgid "Interactive Quiz"
+msgstr ""
+
+msgid "Badges & Achievements"
+msgstr ""
+
+msgid "Scratch Map"
+msgstr ""
+
+msgid "Recommendations Near You"
+msgstr ""
+
+#. Button label: Help command
+msgid "Help"
+msgstr ""
+
+#. Button label: Settings menu
+msgid "Settings"
+msgstr ""
+
+#. Button label: Information about the bot
+msgid "About"
+msgstr ""
+
+msgid "I'm your travel assistant. I can help you explore Belarus tourist routes, test your knowledge with quizzes, earn badges, and find recommendations based on your location."
+msgstr ""
+
+msgid "An error occurred. Please try again later."
+msgstr ""
+
+msgid "No recommendations found nearby."
+msgstr ""
+
+msgid "Please send your location to get recommendations."
+msgstr ""
+
+#. Status message shown while loading content
+msgid "Loading..."
+msgstr ""
+
+#. Button label: Navigate to previous menu or item
+msgid "Back"
+msgstr ""
+
+#. Button label: Affirmative response
+msgid "Yes"
+msgstr ""
+
+#. Button label: Negative response
+msgid "No"
+msgstr ""
+
+msgid "Choose a region:"
+msgstr ""
+
+msgid "Choose a category:"
+msgstr ""
+
+msgid "Choose a route:"
+msgstr ""
+
+#. Title for the route details view
+msgid "Route Details"
+msgstr ""
+
+#. Description of the route with placeholders:
+#. %(route_name)s ? name of the route
+#. %(duration)s ? estimated duration
+#. %(distance)s ? total distance
+#. %(difficulty)s ? difficulty level
+#. %(description)s ? brief description
+msgid "Route: %(route_name)s\nDuration: %(duration)s\nDistance: %(distance)s\nDifficulty: %(difficulty)s\nDescription: %(description)s"
+msgstr ""
+
+#. Button label: Begin the interactive quiz
+msgid "Start Quiz"
+msgstr ""
+
+#. Placeholder for quiz question
+#. %(question)s ? question text
+msgid "%(question)s"
+msgstr ""
+
+#. Placeholder for quiz option
+#. %(option)s ? option text
+msgid "%(option)s"
+msgstr ""
+
+#. Message shown when the quiz answer is correct
+msgid "Correct!"
+msgstr ""
+
+#. Message shown when answer is incorrect
+#. %(answer)s ? correct answer
+msgid "Incorrect. The correct answer was: %(answer)s"
+msgstr ""
+
+#. Quiz result summary
+#. %(score)d ? number of correct answers
+#. %(total)d ? total number of questions
+msgid "Quiz Completed! You scored %(score)d out of %(total)d."
+msgstr ""
+
+#. Button label: Show earned badges
+msgid "View Badges"
+msgstr ""
+
+#. Reward notification
+#. %(badge)s ? name of the unlocked badge
+msgid "Congratulations! You unlocked the '%(badge)s' badge."
+msgstr ""
+
+#. Button label: Show scratch map
+msgid "View Scratch Map"
+msgstr ""
+
+#. Description for scratch map feature
+msgid "Scratch Map: Scratch off the places you've visited."
+msgstr ""
+
+#. Button label: Get location-based recommendations
+msgid "Get Recommendations"
+msgstr ""
+
+#. Singular form for visit count
+#. %(count)d ? number of places visited
+msgid "You have visited %(count)d place."
+msgstr ""
+
+#. Plural form for visit count
+#. %(count)d ? number of places visited
+msgid "You have visited %(count)d places."
+msgstr ""
+
+#. Button label: Change the language settings
+msgid "Change Language"
+msgstr ""
+
+#. Bot version info
+#. %(version)s ? version number
+msgid "Belarus Tourism Bot v%(version)s. Built with ?? using Python, Aiogram, FastAPI."
+msgstr ""
+
+#. Title for language settings
+msgid "Language Settings"
+msgstr ""
+
+#. Title for about bot information
+msgid "About Bot"
+msgstr ""
+
+#. Error message with dynamic description
+#. %(error)s ? error details
+msgid "Error: %(error)s"
+msgstr ""
+
+#. Button label: Return to the main menu
+msgid "Return to Main Menu"
+msgstr ""
+
+#. Button label: Cancel the current operation
+msgid "Cancel"
+msgstr ""
+
+#. Button label: Navigate to next menu or item
+msgid "Next"
+msgstr ""
+
+#. Button label: Navigate to previous menu or item
+msgid "Previous"
+msgstr ""
