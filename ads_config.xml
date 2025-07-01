@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ads_config>
+    <providers>
+        <provider id="google_ads" type="third_party">
+            <credentials>
+                <api_key>${GOOGLE_ADS_API_KEY}</api_key>
+                <client_id>${GOOGLE_ADS_CLIENT_ID}</client_id>
+            </credentials>
+            <settings>
+                <formats>
+                    <format>banner</format>
+                    <format>interstitial</format>
+                    <format>video</format>
+                    <format>native</format>
+                </formats>
+                <timeout_seconds>5</timeout_seconds>
+                <retry_attempts>2</retry_attempts>
+            </settings>
+        </provider>
+        <provider id="internal" type="in_app">
+            <settings>
+                <formats>
+                    <format>text</format>
+                    <format>picture</format>
+                </formats>
+                <timeout_seconds>2</timeout_seconds>
+                <retry_attempts>2</retry_attempts>
+            </settings>
+        </provider>
+    </providers>
+    <ads>
+        <ad id="promo_summer_routes" provider="internal" type="banner">
+            <text key="ad.promo_summer_routes_text"/>
+            <cta key="ad.cta_explore_now"/>
+            <image path="assets/ads/summer_routes_banner.png"/>
+            <target>
+                <languages>
+                    <language code="en"/>
+                    <language code="ru"/>
+                    <language code="be"/>
+                </languages>
+                <geos>
+                    <geo code="BY"/>
+                    <geo code="PL"/>
+                </geos>
+            </target>
+            <schedule>
+                <start>2025-06-01T00:00:00Z</start>
+                <end>2025-08-31T23:59:59Z</end>
+                <frequency_capping>
+                    <max_impressions_per_user>3</max_impressions_per_user>
+                    <refresh_interval_seconds>86400</refresh_interval_seconds>
+                </frequency_capping>
+            </schedule>
+        </ad>
+        <ad id="discount_badge" provider="internal" type="native">
+            <text key="ad.discount_badge_text"/>
+            <cta key="ad.cta_claim_badge"/>
+            <target>
+                <languages>
+                    <language code="en"/>
+                    <language code="be"/>
+                </languages>
+                <geos>
+                    <geo code="ALL"/>
+                </geos>
+            </target>
+            <schedule>
+                <start>2025-01-01T00:00:00Z</start>
+                <end>2025-12-31T23:59:59Z</end>
+                <frequency_capping>
+                    <max_impressions_per_user>1</max_impressions_per_user>
+                </frequency_capping>
+            </schedule>
+        </ad>
+        <ad id="sponsored_quiz" provider="google_ads" type="video">
+            <ad_unit_id>VIDEO_123456789</ad_unit_id>
+            <text key="ad.sponsored_quiz_intro"/>
+            <cta key="ad.cta_play_quiz"/>
+            <target>
+                <languages>
+                    <language code="en"/>
+                    <language code="ru"/>
+                    <language code="be"/>
+                </languages>
+                <geos>
+                    <geo code="UA"/>
+                    <geo code="LT"/>
+                    <geo code="LV"/>
+                </geos>
+            </target>
+            <schedule>
+                <start>2025-05-01T00:00:00Z</start>
+                <end>2025-12-31T23:59:59Z</end>
+                <frequency_capping>
+                    <max_impressions_per_user>2</max_impressions_per_user>
+                    <frequency_capping_per_user>1</frequency_capping_per_user>
+                </frequency_capping>
+            </schedule>
+        </ad>
+    </ads>
+    <global_settings>
+        <frequency_capping default="5"/>
+        <logging>
+            <enabled>true</enabled>
+            <level>INFO</level>
+            <file path="logs/ads.log"/>
+        </logging>
+        <cache>
+            <ttl_seconds>600</ttl_seconds>
+        </cache>
+    </global_settings>
+</ads_config>
