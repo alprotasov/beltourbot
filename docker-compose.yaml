@@ -81,7 +81,7 @@ services:
         export CELERY_RESULT_BACKEND="redis://redis:6379/0";
         exec celery -A app.celery_app beat --loglevel=INFO'
   db:
-    image: postgres:14.21-alpine
+    image: postgres:14-alpine
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
